@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import Link from "next/link";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export function DotsLogo() {
@@ -23,7 +24,8 @@ export function DotsLogo() {
   };
 
   return (
-    <div
+    <Link
+      href="/"
       className="flex items-center gap-2 cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -49,6 +51,6 @@ export function DotsLogo() {
           />
         ))}
       </div>
-    </div>
+    </Link>
   );
 }

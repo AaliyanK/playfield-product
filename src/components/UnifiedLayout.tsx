@@ -9,7 +9,7 @@ const valueData = [
     id: "workflows",
     title: "Workflows",
     description:
-      "Our AI reasons over your enterprise systems and plans your agentic workflow. You can edit or just execute.",
+      "We build a knowledge graph of your enterprise systems for our AI to reason over and plan your agentic workflows. You can then edit or just execute.",
     mediaType: "image" as const,
     mediaUrl: "/images/workflows.png",
   },
@@ -19,7 +19,7 @@ const valueData = [
     description:
       "Prompt to build fully functional internal apps and complete UIs that interact with your systems.",
     mediaType: "image" as const,
-    mediaUrl: "/images/app.png",
+    mediaUrl: "/images/apps.png",
   },
   {
     id: "specialization",
@@ -34,7 +34,8 @@ const valueData = [
     title: "Enterprise Security",
     description:
       "We prioritize on-prem/VPC deployment, SSO and seat-by-seat auth. We can also integrate custom security measures like VDRs on request.",
-    mediaType: "video" as const,
+    mediaType: "image" as const,
+    mediaUrl: "/images/Enterprise.png",
   },
 ];
 
@@ -231,14 +232,14 @@ export function UnifiedLayout() {
             <div className="absolute inset-0 flex items-start justify-center pt-16 sm:pt-20 md:pt-24 lg:pt-60">
               <div className="relative">
                 {/* Text selection highlight background */}
-                <div
+                {/* <div
                   className="absolute inset-0 px-2 py-1"
                   style={{
                     background: "#1C4CCE", // Blue selection highlight
                     borderRadius: "2px",
                     transform: "translateY(-2px)",
                   }}
-                ></div>
+                ></div> */}
 
                 {/* Main text */}
                 <h1
