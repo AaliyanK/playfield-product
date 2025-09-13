@@ -2,24 +2,25 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { ValueCard } from "./ValueCard";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { useEffect, useState } from "react";
 
 const valueData = [
   {
-    id: "workflows",
-    title: "Workflows",
-    description:
-      "We build a knowledge graph of your enterprise systems for our AI to reason over and plan your agentic workflows. You can then edit or just execute.",
-    mediaType: "image" as const,
-    mediaUrl: "/images/workflows.png",
-  },
-  {
     id: "apps",
-    title: "Apps",
+    title: "Knowledge Graph",
     description:
-      "Prompt to build fully functional internal apps and complete UIs that interact with your systems.",
+      "We build a reasoning map over your enterprise systems/environments and the data they contain. This results in a real time knowledge graph that learns and updates itself from changes to your systems, files/docs, your workflows, and policies.",
     mediaType: "image" as const,
     mediaUrl: "/images/apps.png",
+  },
+  {
+    id: "workflows",
+    title: "Agentic Workflows",
+    description:
+      "We build over the knowledge graph of your enterprise for our AI to reason over and plan your agentic workflows. You can then edit or just execute.",
+    mediaType: "image" as const,
+    mediaUrl: "/images/workflows.png",
   },
   {
     id: "specialization",
@@ -31,7 +32,7 @@ const valueData = [
   },
   {
     id: "enterprise-security",
-    title: "Enterprise Security",
+    title: "Security",
     description:
       "We prioritize on-prem/VPC deployment, SSO and seat-by-seat auth. We can also integrate custom security measures like VDRs on request.",
     mediaType: "image" as const,
@@ -41,316 +42,372 @@ const valueData = [
 
 export function UnifiedLayout() {
   const { scrollYProgress } = useScroll();
+  const shouldReduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Create transforms for intro text (always visible)
-  const introOpacity = useTransform(
+  // Detect mobile devices - only for actual mobile screens
+  useEffect(() => {
+    const checkMobile = () => {
+      // Only treat as mobile if it's actually a small mobile screen
+      const mobile = window.innerWidth < 768; // md breakpoint - tablets and phones
+      console.log("Mobile detection:", mobile, "Width:", window.innerWidth);
+      setIsMobile(mobile);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Create transforms for hero section - balanced timing
+  const heroOpacity = useTransform(
     scrollYProgress,
-    [0, 0.15, 0.25, 0.35],
+    [0, 0.2, 0.3, 0.4],
     [1, 1, 0.3, 0]
   );
-  const introBlur = useTransform(
+  const heroBlurFull = useTransform(
     scrollYProgress,
-    [0, 0.15, 0.25, 0.35],
-    [0, 0, 0, 4]
+    [0, 0.2, 0.3, 0.4],
+    [0, 0, 0, 2]
   );
-  const introY = useTransform(
+  const heroBlurReduced = useTransform(scrollYProgress, [0, 1], [0, 0]);
+  const heroBlur = shouldReduceMotion ? heroBlurReduced : heroBlurFull;
+  const heroY = useTransform(
     scrollYProgress,
-    [0, 0.15, 0.25, 0.35],
+    [0, 0.2, 0.3, 0.4],
     [0, 0, 0, -30]
   );
-  const introScale = useTransform(
-    scrollYProgress,
-    [0, 0.15, 0.25, 0.35],
-    [1, 1, 1, 0.95]
-  );
 
-  // Create transforms for each value card (0-3, 4 total)
-  const card0Opacity = useTransform(
+  // Create transforms for each value proposition section - better timing
+  const section0Opacity = useTransform(
     scrollYProgress,
-    [0.15, 0.25, 0.35, 0.45],
+    [0.25, 0.35, 0.45, 0.55],
     [0, 1, 1, 0]
   );
-  const card0Blur = useTransform(
+  const section0BlurFull = useTransform(
     scrollYProgress,
-    [0.15, 0.25, 0.35, 0.45],
-    [4, 0, 0, 4]
+    [0.25, 0.35, 0.45, 0.55],
+    [2, 0, 0, 2]
   );
-  const card0Y = useTransform(
+  const section0BlurReduced = useTransform(scrollYProgress, [0, 1], [0, 0]);
+  const section0Blur = shouldReduceMotion
+    ? section0BlurReduced
+    : section0BlurFull;
+  const section0Y = useTransform(
     scrollYProgress,
-    [0.15, 0.25, 0.35, 0.45],
+    [0.25, 0.35, 0.45, 0.55],
     [30, 0, 0, -30]
   );
-  const card0Scale = useTransform(
-    scrollYProgress,
-    [0.15, 0.25, 0.35, 0.45],
-    [0.95, 1, 1, 0.95]
-  );
 
-  const card1Opacity = useTransform(
+  const section1Opacity = useTransform(
     scrollYProgress,
-    [0.35, 0.45, 0.55, 0.65],
+    [0.45, 0.55, 0.65, 0.75],
     [0, 1, 1, 0]
   );
-  const card1Blur = useTransform(
+  const section1BlurFull = useTransform(
     scrollYProgress,
-    [0.35, 0.45, 0.55, 0.65],
-    [4, 0, 0, 4]
+    [0.45, 0.55, 0.65, 0.75],
+    [2, 0, 0, 2]
   );
-  const card1Y = useTransform(
+  const section1BlurReduced = useTransform(scrollYProgress, [0, 1], [0, 0]);
+  const section1Blur = shouldReduceMotion
+    ? section1BlurReduced
+    : section1BlurFull;
+  const section1Y = useTransform(
     scrollYProgress,
-    [0.35, 0.45, 0.55, 0.65],
+    [0.45, 0.55, 0.65, 0.75],
     [30, 0, 0, -30]
   );
-  const card1Scale = useTransform(
-    scrollYProgress,
-    [0.35, 0.45, 0.55, 0.65],
-    [0.95, 1, 1, 0.95]
-  );
 
-  const card2Opacity = useTransform(
+  const section2Opacity = useTransform(
     scrollYProgress,
-    [0.55, 0.65, 0.75, 0.85],
+    [0.65, 0.75, 0.85, 0.95],
     [0, 1, 1, 0]
   );
-  const card2Blur = useTransform(
+  const section2BlurFull = useTransform(
     scrollYProgress,
-    [0.55, 0.65, 0.75, 0.85],
-    [4, 0, 0, 4]
+    [0.65, 0.75, 0.85, 0.95],
+    [2, 0, 0, 2]
   );
-  const card2Y = useTransform(
+  const section2BlurReduced = useTransform(scrollYProgress, [0, 1], [0, 0]);
+  const section2Blur = shouldReduceMotion
+    ? section2BlurReduced
+    : section2BlurFull;
+  const section2Y = useTransform(
     scrollYProgress,
-    [0.55, 0.65, 0.75, 0.85],
+    [0.65, 0.75, 0.85, 0.95],
     [30, 0, 0, -30]
   );
-  const card2Scale = useTransform(
-    scrollYProgress,
-    [0.55, 0.65, 0.75, 0.85],
-    [0.95, 1, 1, 0.95]
-  );
 
-  const card3Opacity = useTransform(
+  const section3Opacity = useTransform(
     scrollYProgress,
-    [0.75, 0.85, 0.95, 1],
+    [0.85, 0.9, 0.95, 1],
     [0, 1, 1, 1]
   );
-  const card3Blur = useTransform(
+  const section3BlurFull = useTransform(
     scrollYProgress,
-    [0.75, 0.85, 0.95, 1],
-    [4, 0, 0, 0]
+    [0.85, 0.9, 0.95, 1],
+    [2, 0, 0, 0]
   );
-  const card3Y = useTransform(
+  const section3BlurReduced = useTransform(scrollYProgress, [0, 1], [0, 0]);
+  const section3Blur = shouldReduceMotion
+    ? section3BlurReduced
+    : section3BlurFull;
+  const section3Y = useTransform(
     scrollYProgress,
-    [0.75, 0.85, 0.95, 1],
+    [0.85, 0.9, 0.95, 1],
     [30, 0, 0, 0]
   );
-  const card3Scale = useTransform(
-    scrollYProgress,
-    [0.75, 0.85, 0.95, 1],
-    [0.95, 1, 1, 1]
-  );
 
-  // Create transforms for horizontal lines (4 lines for 4 value props)
-  const line0Opacity = useTransform(
-    scrollYProgress,
-    [0.15, 0.25, 0.35, 0.45],
-    [0.3, 1, 1, 0.3]
-  );
-  const line0Scale = useTransform(
-    scrollYProgress,
-    [0.15, 0.25, 0.35, 0.45],
-    [0.8, 1, 1, 0.8]
-  );
-
-  const line1Opacity = useTransform(
-    scrollYProgress,
-    [0.35, 0.45, 0.55, 0.65],
-    [0.3, 1, 1, 0.3]
-  );
-  const line1Scale = useTransform(
-    scrollYProgress,
-    [0.35, 0.45, 0.55, 0.65],
-    [0.8, 1, 1, 0.8]
-  );
-
-  const line2Opacity = useTransform(
-    scrollYProgress,
-    [0.55, 0.65, 0.75, 0.85],
-    [0.3, 1, 1, 0.3]
-  );
-  const line2Scale = useTransform(
-    scrollYProgress,
-    [0.55, 0.65, 0.75, 0.85],
-    [0.8, 1, 1, 0.8]
-  );
-
-  const line3Opacity = useTransform(
-    scrollYProgress,
-    [0.75, 0.85, 0.95, 1],
-    [0.3, 1, 1, 1]
-  );
-  const line3Scale = useTransform(
-    scrollYProgress,
-    [0.75, 0.85, 0.95, 1],
-    [0.8, 1, 1, 1]
-  );
-
-  const cardTransforms = [
-    { opacity: card0Opacity, blur: card0Blur, y: card0Y, scale: card0Scale },
-    { opacity: card1Opacity, blur: card1Blur, y: card1Y, scale: card1Scale },
-    { opacity: card2Opacity, blur: card2Blur, y: card2Y, scale: card2Scale },
-    { opacity: card3Opacity, blur: card3Blur, y: card3Y, scale: card3Scale },
-  ];
-
-  const lineTransforms = [
-    { opacity: line0Opacity, scale: line0Scale },
-    { opacity: line1Opacity, scale: line1Scale },
-    { opacity: line2Opacity, scale: line2Scale },
-    { opacity: line3Opacity, scale: line3Scale },
+  // For mobile: make all sections always visible, no scroll-based hiding
+  const sectionTransforms = [
+    {
+      opacity: isMobile ? 1 : section0Opacity,
+      blur: isMobile ? 0 : section0Blur,
+      y: isMobile ? 0 : section0Y,
+    },
+    {
+      opacity: isMobile ? 1 : section1Opacity,
+      blur: isMobile ? 0 : section1Blur,
+      y: isMobile ? 0 : section1Y,
+    },
+    {
+      opacity: isMobile ? 1 : section2Opacity,
+      blur: isMobile ? 0 : section2Blur,
+      y: isMobile ? 0 : section2Y,
+    },
+    {
+      opacity: isMobile ? 1 : section3Opacity,
+      blur: isMobile ? 0 : section3Blur,
+      y: isMobile ? 0 : section3Y,
+    },
   ];
 
   return (
-    <section className="h-screen w-full bg-white flex flex-col lg:flex-row px-3 sm:px-6 md:px-8 lg:px-16">
-      {/* Left Side - Text Content with Field Background */}
-      <div className="w-full lg:w-1/2 h-1/2 lg:h-full flex flex-col justify-center pr-0 lg:pr-8">
-        {/* Main Image Card - Scaled up version of value card */}
-        <div className="flex flex-col space-y-4 sm:space-y-6">
-          {/* Field Image */}
-          <motion.div
-            className="relative w-full aspect-[4/3] overflow-hidden"
-            initial={{ filter: "blur(8px)", opacity: 0 }}
-            animate={{ filter: "blur(0px)", opacity: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-          >
-            <Image
-              src="/images/field.png"
-              alt="Green field with clear sky"
-              fill
-              className="object-cover object-center"
-              priority
-            />
-            {/* Title overlay with text selection highlight effect */}
-            <div className="absolute inset-0 flex items-start justify-center pt-16 sm:pt-20 md:pt-24 lg:pt-60">
-              <div className="relative">
-                {/* Text selection highlight background */}
-                {/* <div
-                  className="absolute inset-0 px-2 py-1"
-                  style={{
-                    background: "#1C4CCE", // Blue selection highlight
-                    borderRadius: "2px",
-                    transform: "translateY(-2px)",
-                  }}
-                ></div> */}
+    <div
+      className={`w-full bg-white ${isMobile ? "pb-16" : ""}`}
+      style={{ height: isMobile ? "auto" : "500vh" }}
+    >
+      {/* Hero Section - Wide Image */}
+      <motion.section
+        className="w-full flex flex-col items-center justify-center px-2 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-20 lg:py-24"
+        style={{
+          opacity: isMobile ? 1 : heroOpacity,
+          filter: `blur(${isMobile ? 0 : heroBlur}px)`,
+          y: isMobile ? 0 : heroY,
+        }}
+      >
+        {/* Wide Image */}
+        <div className="relative w-full aspect-[4/3] mb-12 sm:mb-16 lg:mb-20">
+          <Image
+            src="/images/field.png"
+            alt="Green field with clear sky"
+            fill
+            className="object-cover object-center"
+            priority
+          />
 
-                {/* Main text */}
-                <h1
-                  className="relative text-white text-center px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4"
-                  style={{
-                    fontFamily: "var(--font-instrument-sans)",
-                    fontWeight: 400,
-                    fontSize: "clamp(1.8rem, 8vw, 6rem)",
-                    lineHeight: "0.9",
-                    letterSpacing: "-0.05em",
-                    color: "#FFFFFF",
-                    textShadow: "0 4px 12px rgba(0,0,0,0.7)",
-                  }}
-                >
-                  Welcome to the Field
-                </h1>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Right Side - Intro Text and Value Props */}
-      <div className="w-full lg:w-1/2 h-1/2 lg:h-full bg-white relative pl-0 lg:pl-8">
-        {/* Intro Text and Value Cards - Single Card Display */}
-        <motion.div
-          className="h-full flex items-center justify-center p-4 sm:p-6 lg:p-8 pr-12 sm:pr-20 md:pr-24 lg:pr-28 xl:pr-36"
-          initial={{ filter: "blur(8px)", opacity: 0 }}
-          animate={{ filter: "blur(0px)", opacity: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
-        >
-          <div className="w-full max-w-xl relative">
-            {/* Intro Text - Always visible initially */}
-            <motion.div
-              className="absolute inset-0 flex items-center justify-center"
+          {/* Main Title Overlay */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <motion.h1
+              className="text-white text-center px-4"
               style={{
-                opacity: introOpacity,
-                filter: `blur(${introBlur}px)`,
-                y: introY,
-                scale: introScale,
-                zIndex: introOpacity.get() > 0.1 ? 10 : 1,
+                fontFamily: "var(--font-instrument-sans)",
+                fontWeight: 400,
+                fontSize: "clamp(4rem, 18vw, 30rem)",
+                lineHeight: "0.9",
+                letterSpacing: "-0.05em",
+              }}
+              initial={{
+                filter: shouldReduceMotion ? "blur(0px)" : "blur(4px)",
+                opacity: 0,
+              }}
+              animate={{ filter: "blur(0px)", opacity: 1 }}
+              transition={{
+                duration: shouldReduceMotion ? 0.3 : 1.2,
+                delay: shouldReduceMotion ? 0 : 0.2,
               }}
             >
-              <div className="w-full">
-                <p
-                  className="font-normal leading-relaxed text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-left"
+              Welcome to the Field
+            </motion.h1>
+          </div>
+        </div>
+
+        {/* Interface 1 Section */}
+        <div className="w-full max-w-4xl mx-auto text-center">
+          {/* Interface 1 Title */}
+          <motion.h2
+            className="text-black mb-6 sm:mb-8"
+            style={{
+              fontFamily: "var(--font-instrument-sans)",
+              fontWeight: 400,
+              fontSize: "clamp(1.8rem, 3.5vw, 4rem)",
+              lineHeight: "1.1",
+              letterSpacing: "-0.03em",
+            }}
+            initial={{
+              filter: shouldReduceMotion ? "blur(0px)" : "blur(4px)",
+              opacity: 0,
+            }}
+            animate={{ filter: "blur(0px)", opacity: 1 }}
+            transition={{
+              duration: shouldReduceMotion ? 0.3 : 1.2,
+              delay: shouldReduceMotion ? 0 : 0.4,
+            }}
+          >
+            Interface 1
+          </motion.h2>
+
+          {/* Description Text */}
+          <motion.p
+            className="text-gray-600 max-w-3xl mx-auto"
+            style={{
+              fontFamily: "var(--font-instrument-sans)",
+              fontWeight: 400,
+              fontSize: "clamp(0.9rem, 1.2vw, 1.5rem)",
+              lineHeight: "1.4",
+              letterSpacing: "-0.01em",
+            }}
+            initial={{
+              filter: shouldReduceMotion ? "blur(0px)" : "blur(4px)",
+              opacity: 0,
+            }}
+            animate={{ filter: "blur(0px)", opacity: 1 }}
+            transition={{
+              duration: shouldReduceMotion ? 0.3 : 1.2,
+              delay: shouldReduceMotion ? 0 : 0.6,
+            }}
+          >
+            Turning legacy enterprises into AI operated businesses with RL
+          </motion.p>
+        </div>
+      </motion.section>
+
+      {/* Value Proposition Sections */}
+      {valueData.map((value, index) => {
+        const transforms = sectionTransforms[index];
+        const isEven = index % 2 === 0;
+
+        return (
+          <motion.section
+            key={value.id}
+            className={`w-full flex flex-col lg:flex-row items-center px-4 sm:px-6 md:px-8 lg:px-16 ${
+              isMobile
+                ? index === valueData.length - 1
+                  ? "py-8 sm:py-12"
+                  : "py-12 sm:py-16"
+                : "min-h-screen lg:h-screen py-8 sm:py-12 lg:py-0"
+            }`}
+            style={{
+              opacity: transforms.opacity,
+              filter: `blur(${transforms.blur}px)`,
+              y: transforms.y,
+            }}
+          >
+            {/* Text Content */}
+            <div
+              className={`w-full ${
+                isMobile
+                  ? "order-2 mt-6"
+                  : `lg:w-1/2 ${isEven ? "lg:pr-8" : "lg:pl-8"} ${isEven ? "lg:order-1" : "lg:order-2"} order-2`
+              }`}
+            >
+              <div
+                className={`max-w-2xl ${
+                  isMobile ? "mx-auto text-center px-4" : "mx-auto lg:mx-0"
+                }`}
+              >
+                <motion.h3
+                  className="text-black mb-4 sm:mb-6 lg:mb-8"
                   style={{
                     fontFamily: "var(--font-instrument-sans)",
                     fontWeight: 400,
+                    fontSize: "clamp(1.8rem, 3.5vw, 4rem)",
                     lineHeight: "1.1",
-                    letterSpacing: "-0.02em",
-                    color: "#07130E",
+                    letterSpacing: "-0.03em",
                   }}
+                  initial={{
+                    filter: shouldReduceMotion ? "blur(0px)" : "blur(4px)",
+                    opacity: 0,
+                  }}
+                  whileInView={{
+                    filter: "blur(0px)",
+                    opacity: 1,
+                    transition: {
+                      duration: shouldReduceMotion ? 0.3 : 1.2,
+                      delay: shouldReduceMotion ? 0 : 0.2,
+                    },
+                  }}
+                  viewport={{ once: true }}
                 >
-                  Generate agentic workflows and internal apps that take actions
-                  over your existing systems.
-                </p>
+                  {value.title}
+                </motion.h3>
+
+                <motion.p
+                  className="text-gray-600"
+                  style={{
+                    fontFamily: "var(--font-instrument-sans)",
+                    fontWeight: 400,
+                    fontSize: "clamp(0.9rem, 1.2vw, 1.5rem)",
+                    lineHeight: "1.4",
+                    letterSpacing: "-0.01em",
+                  }}
+                  initial={{
+                    filter: shouldReduceMotion ? "blur(0px)" : "blur(4px)",
+                    opacity: 0,
+                  }}
+                  whileInView={{
+                    filter: "blur(0px)",
+                    opacity: 1,
+                    transition: {
+                      duration: shouldReduceMotion ? 0.3 : 1.2,
+                      delay: shouldReduceMotion ? 0 : 0.4,
+                    },
+                  }}
+                  viewport={{ once: true }}
+                >
+                  {value.description}
+                </motion.p>
               </div>
-            </motion.div>
+            </div>
 
-            {/* Value Cards */}
-            {valueData.map((value, index) => {
-              const transforms = cardTransforms[index];
-
-              return (
-                <motion.div
-                  key={value.id}
-                  className="absolute inset-0 flex items-center justify-center"
-                  style={{
-                    opacity: transforms.opacity,
-                    filter: `blur(${transforms.blur}px)`,
-                    y: transforms.y,
-                    scale: transforms.scale,
-                    zIndex: transforms.opacity.get() > 0.1 ? 10 : 1,
-                  }}
-                >
-                  <ValueCard
-                    title={value.title}
-                    description={value.description}
-                    mediaType={value.mediaType}
-                    mediaUrl={value.mediaUrl}
-                  />
-                </motion.div>
-              );
-            })}
-          </div>
-        </motion.div>
-
-        {/* Horizontal Lines - Rightmost Position */}
-        <div className="absolute top-1/2 right-2 sm:right-4 md:right-6 lg:right-8 -translate-y-1/2 z-10">
-          <div className="flex flex-col space-y-4 sm:space-y-6 lg:space-y-8">
-            {valueData.map((value, index) => {
-              const transforms = lineTransforms[index];
-
-              return (
-                <motion.div
-                  key={value.id}
-                  className="flex items-center"
-                  style={{
-                    opacity: transforms.opacity,
-                    scale: transforms.scale,
-                  }}
-                >
-                  <div className="w-16 sm:w-20 lg:w-24 h-px bg-accent mr-2 sm:mr-3 lg:mr-4" />
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-accent rounded-full" />
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </section>
+            {/* Image Content */}
+            <div
+              className={`w-full ${
+                isMobile
+                  ? "order-1 mb-6"
+                  : `lg:w-1/2 ${isEven ? "lg:pl-8" : "lg:pr-8"} ${isEven ? "lg:order-2" : "lg:order-1"} order-1 mb-6 sm:mb-8 lg:mb-0`
+              }`}
+            >
+              <motion.div
+                className={`relative w-full overflow-hidden bg-gray-50 ${
+                  isMobile ? "aspect-[3/2]" : "aspect-[4/3]"
+                }`}
+                initial={{
+                  filter: shouldReduceMotion ? "blur(0px)" : "blur(4px)",
+                  opacity: 0,
+                }}
+                whileInView={{
+                  filter: "blur(0px)",
+                  opacity: 1,
+                  transition: {
+                    duration: shouldReduceMotion ? 0.3 : 1.2,
+                    delay: shouldReduceMotion ? 0 : 0.3,
+                  },
+                }}
+                viewport={{ once: true }}
+              >
+                <Image
+                  src={value.mediaUrl}
+                  alt={value.title}
+                  fill
+                  className="object-cover"
+                />
+              </motion.div>
+            </div>
+          </motion.section>
+        );
+      })}
+    </div>
   );
 }

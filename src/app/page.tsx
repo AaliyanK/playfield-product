@@ -5,9 +5,9 @@ import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 export default function Home() {
   return (
     <SmoothScrollProvider>
-      <div className="min-h-[400vh] bg-white">
+      <div className="bg-white">
         <SiteHeader />
-        <main className="h-screen sticky top-0">
+        <main>
           <UnifiedLayout />
         </main>
       </div>

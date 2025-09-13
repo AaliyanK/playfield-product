@@ -2,9 +2,47 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useLayoutEffect } from "react";
+import { useRouter } from "next/navigation";
 import { SiteHeader } from "@/components/SiteHeader";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export default function Whitepaper() {
+  const router = useRouter();
+  const shouldReduceMotion = useReducedMotion();
+
+  // Scroll to top when component mounts - using multiple strategies
+  useLayoutEffect(() => {
+    // Immediate scroll to top
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
+
+  useEffect(() => {
+    // Force scroll to top with multiple attempts
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    // Immediate scroll
+    scrollToTop();
+
+    // Additional scroll attempts with small delays
+    const timers = [
+      setTimeout(scrollToTop, 0),
+      setTimeout(scrollToTop, 10),
+      setTimeout(scrollToTop, 50),
+      setTimeout(scrollToTop, 100),
+    ];
+
+    return () => {
+      timers.forEach(clearTimeout);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <SiteHeader />
@@ -21,9 +59,15 @@ export default function Whitepaper() {
                 letterSpacing: "-0.03em",
                 color: "#07130E",
               }}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              initial={{
+                filter: shouldReduceMotion ? "blur(0px)" : "blur(4px)",
+                opacity: 0,
+              }}
+              animate={{ filter: "blur(0px)", opacity: 1 }}
+              transition={{
+                duration: shouldReduceMotion ? 0.3 : 1.2,
+                delay: shouldReduceMotion ? 0 : 0.2,
+              }}
             >
               Whitepaper
             </motion.h2>
@@ -35,50 +79,32 @@ export default function Whitepaper() {
                 fontWeight: 400,
                 color: "#07130E",
               }}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+              initial={{
+                filter: shouldReduceMotion ? "blur(0px)" : "blur(4px)",
+                opacity: 0,
+              }}
+              animate={{ filter: "blur(0px)", opacity: 1 }}
+              transition={{
+                duration: shouldReduceMotion ? 0.3 : 1.2,
+                delay: shouldReduceMotion ? 0 : 0.4,
+              }}
             >
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
-              >
+              <p>
                 We&apos;re announcing Playfield. We&apos;re building for a
                 future where enterprises transition from operating through human
                 interfaces to delegating tasks to agents end-to-end. For this to
                 happen, we believe that the entire world of B2B software needs
                 to be re-built for agents to interact with, rather than for
                 humans.
-              </motion.p>
+              </p>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
-              >
+              <p>
                 We&apos;re working with our customers directly to rebuild their
                 enterprise software stack as agent environments, and train
                 agents to complete their critical workflows within them.
-              </motion.p>
+              </p>
 
-              <motion.div
-                className="my-12"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
-              >
-                <Image
-                  src="/images/whitepaper.png"
-                  alt="Data transformation from structured blocks to intelligent network"
-                  width={800}
-                  height={400}
-                  className="w-full h-auto rounded-lg shadow-lg"
-                  priority
-                />
-              </motion.div>
-
-              <motion.h4
+              <h4
                 className="font-normal text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-tight mt-16 mb-8"
                 style={{
                   fontFamily: "var(--font-instrument-sans)",
@@ -87,12 +113,9 @@ export default function Whitepaper() {
                   letterSpacing: "-0.03em",
                   color: "#07130E",
                 }}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 1.2 }}
               >
                 Foundations
-              </motion.h4>
+              </h4>
 
               <p>
                 Enterprises run on legacy software, and we know migration is
@@ -134,7 +157,7 @@ export default function Whitepaper() {
                 over this knowledge graph structure.
               </p>
 
-              <motion.h4
+              <h4
                 className="font-normal text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-tight mt-16 mb-8"
                 style={{
                   fontFamily: "var(--font-instrument-sans)",
@@ -143,12 +166,9 @@ export default function Whitepaper() {
                   letterSpacing: "-0.03em",
                   color: "#07130E",
                 }}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 2.0 }}
               >
                 Specialization
-              </motion.h4>
+              </h4>
 
               <p>
                 Customers with complex workflows that take hours, if not days,
@@ -183,7 +203,7 @@ export default function Whitepaper() {
                 reliably.
               </p>
 
-              <motion.h4
+              <h4
                 className="font-normal text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-tight mt-16 mb-8"
                 style={{
                   fontFamily: "var(--font-instrument-sans)",
@@ -192,12 +212,9 @@ export default function Whitepaper() {
                   letterSpacing: "-0.03em",
                   color: "#07130E",
                 }}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 2.2 }}
               >
                 Security
-              </motion.h4>
+              </h4>
 
               <p>
                 We know that forward thinking customers interested in Playfield
@@ -209,7 +226,7 @@ export default function Whitepaper() {
                 platform custom to you.
               </p>
 
-              <motion.h4
+              <h4
                 className="font-normal text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-tight mt-16 mb-8"
                 style={{
                   fontFamily: "var(--font-instrument-sans)",
@@ -218,12 +235,9 @@ export default function Whitepaper() {
                   letterSpacing: "-0.03em",
                   color: "#07130E",
                 }}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 2.4 }}
               >
                 Today
-              </motion.h4>
+              </h4>
 
               <p>
                 We are currently accepting early design partners to build our
@@ -239,18 +253,13 @@ export default function Whitepaper() {
                 </a>
               </p>
 
-              <motion.div
-                className="mt-16 pt-8 border-t border-gray-200"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 2.6 }}
-              >
+              <div className="mt-16 pt-8 border-t border-gray-200">
                 <p className="text-lg sm:text-xl lg:text-2xl">
                   Thanks,
                   <br />
                   The Playfield team :)
                 </p>
-              </motion.div>
+              </div>
             </motion.div>
           </div>
         </section>
