@@ -10,23 +10,23 @@ const valueData = [
     id: "apps",
     title: "Knowledge Graph",
     description:
-      "We build a reasoning map over your enterprise systems/environments and the data they contain. This results in a real time knowledge graph that learns and updates itself from changes to your systems, files/docs, your workflows, and policies.",
+      "The multimodal reasoning map over your enterprise systems and the data they contain. A real time knowledge graph that learns and updates itself from changes to your systems, files, documents, workflows, and policies.",
     mediaType: "image" as const,
-    mediaUrl: "/images/apps.png",
+    mediaUrl: "/images/graph2.png",
   },
   {
     id: "workflows",
     title: "Agentic Workflows",
     description:
-      "We build over the knowledge graph of your enterprise for our AI to reason over and plan your agentic workflows. You can then edit or just execute.",
+      "AI agents reason over your knowledge graph to build robust workflows that interact with your systems. You can edit them or just execute.",
     mediaType: "image" as const,
     mediaUrl: "/images/workflows.png",
   },
   {
     id: "specialization",
-    title: "Specialization",
+    title: "Specialized Intelligence",
     description:
-      "For complex agentic workflows that may take hours or days for a human to execute, we work with you to train specialized agents that perform these tasks robustly.",
+      "For complex agentic workflows that may take hours or days for a human to execute, we work with you to train specialized agents that perform these tasks robustly through RL.",
     mediaType: "image" as const,
     mediaUrl: "/images/specialization.png",
   },
@@ -34,7 +34,7 @@ const valueData = [
     id: "enterprise-security",
     title: "Security",
     description:
-      "We prioritize on-prem/VPC deployment, SSO and seat-by-seat auth. We can also integrate custom security measures like VDRs on request.",
+      "We prioritize on-prem/VPC deployment, SSO and seat-by-seat auth, as well as industry specific measures like VDRs. We work with you to ensure complete security and compliance for your enterprise.",
     mediaType: "image" as const,
     mediaUrl: "/images/Enterprise.png",
   },
@@ -235,15 +235,15 @@ export function UnifiedLayout() {
 
         {/* Interface 1 Section */}
         <div className="w-full max-w-4xl mx-auto text-center">
-          {/* Interface 1 Title */}
-          <motion.h2
+          {/* Tagline Text - Now Above Interface 1 */}
+          <motion.p
             className="text-black mb-6 sm:mb-8"
             style={{
               fontFamily: "var(--font-instrument-sans)",
               fontWeight: 400,
-              fontSize: "clamp(1.8rem, 3.5vw, 4rem)",
-              lineHeight: "1.1",
-              letterSpacing: "-0.03em",
+              fontSize: "clamp(1.5rem, 4vw, 4rem)",
+              lineHeight: "1.2",
+              letterSpacing: "-0.02em",
             }}
             initial={{
               filter: shouldReduceMotion ? "blur(0px)" : "blur(4px)",
@@ -255,16 +255,17 @@ export function UnifiedLayout() {
               delay: shouldReduceMotion ? 0 : 0.4,
             }}
           >
-            Interface 1
-          </motion.h2>
+            Turning legacy enterprises into AI operated businesses with
+            specialized intelligence
+          </motion.p>
 
-          {/* Description Text */}
+          {/* Interface 1 Title - Now Below Tagline as Body Text */}
           <motion.p
-            className="text-gray-600 max-w-3xl mx-auto"
+            className="text-black"
             style={{
               fontFamily: "var(--font-instrument-sans)",
               fontWeight: 400,
-              fontSize: "clamp(0.9rem, 1.2vw, 1.5rem)",
+              fontSize: "clamp(1rem, 1.5vw, 1.8rem)",
               lineHeight: "1.4",
               letterSpacing: "-0.01em",
             }}
@@ -278,7 +279,7 @@ export function UnifiedLayout() {
               delay: shouldReduceMotion ? 0 : 0.6,
             }}
           >
-            Turning legacy enterprises into AI operated businesses with RL
+            Interface 1
           </motion.p>
         </div>
       </motion.section>

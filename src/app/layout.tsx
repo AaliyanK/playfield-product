@@ -25,9 +25,9 @@ const instrumentSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Playfield - Generate Agentic Workflows and Internal Apps",
+  title: "Playfield",
   description:
-    "Generate agentic workflows and internal apps that take actions over your existing systems. AI-powered automation for enterprise.",
+    "Turning legacy enterprises into AI operated businesses with specialized intelligence",
   keywords: [
     "AI",
     "automation",
@@ -38,17 +38,17 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Playfield" }],
   openGraph: {
-    title: "Playfield - Generate Agentic Workflows and Internal Apps",
+    title: "Playfield",
     description:
-      "Generate agentic workflows and internal apps that take actions over your existing systems.",
+      "Turning legacy enterprises into AI operated businesses with specialized intelligence",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Playfield - Generate Agentic Workflows and Internal Apps",
+    title: "Playfield",
     description:
-      "Generate agentic workflows and internal apps that take actions over your existing systems.",
+      "Turning legacy enterprises into AI operated businesses with specialized intelligence",
   },
 };
 
