@@ -258,29 +258,6 @@ export function UnifiedLayout() {
             Turning legacy enterprises into AI operated businesses with
             specialized intelligence
           </motion.p>
-
-          {/* Interface 1 Title - Now Below Tagline as Body Text */}
-          <motion.p
-            className="text-black"
-            style={{
-              fontFamily: "var(--font-instrument-sans)",
-              fontWeight: 400,
-              fontSize: "clamp(1rem, 1.5vw, 1.8rem)",
-              lineHeight: "1.4",
-              letterSpacing: "-0.01em",
-            }}
-            initial={{
-              filter: shouldReduceMotion ? "blur(0px)" : "blur(4px)",
-              opacity: 0,
-            }}
-            animate={{ filter: "blur(0px)", opacity: 1 }}
-            transition={{
-              duration: shouldReduceMotion ? 0.3 : 1.2,
-              delay: shouldReduceMotion ? 0 : 0.6,
-            }}
-          >
-            Interface 1
-          </motion.p>
         </div>
       </motion.section>
 
