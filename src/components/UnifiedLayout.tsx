@@ -200,7 +200,7 @@ export function UnifiedLayout() {
         {/* Wide Image */}
         <div className="relative w-full aspect-[4/3] mb-12 sm:mb-16 lg:mb-20">
           <Image
-            src="/images/field.png"
+            src="/images/field2.png"
             alt="Green field with clear sky"
             fill
             className="object-cover object-center"
