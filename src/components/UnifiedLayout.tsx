@@ -287,12 +287,16 @@ export function UnifiedLayout() {
               className={`w-full ${
                 isMobile
                   ? "order-2 mt-6"
-                  : `lg:w-1/2 ${isEven ? "lg:pr-8" : "lg:pl-8"} ${isEven ? "lg:order-1" : "lg:order-2"} order-2`
+                  : `lg:w-2/5 ${isEven ? "lg:pr-8" : "lg:pl-8"} ${isEven ? "lg:order-1" : "lg:order-2"} order-2`
               }`}
             >
               <div
-                className={`max-w-2xl ${
-                  isMobile ? "mx-auto text-center px-4" : "mx-auto lg:mx-0"
+                className={`max-w-lg ${
+                  isMobile
+                    ? "mx-auto text-center px-4"
+                    : isEven
+                      ? "mx-auto lg:mx-0 lg:ml-auto"
+                      : "mx-auto lg:mx-0"
                 }`}
               >
                 <motion.h3
@@ -300,7 +304,7 @@ export function UnifiedLayout() {
                   style={{
                     fontFamily: "var(--font-instrument-sans)",
                     fontWeight: 400,
-                    fontSize: "clamp(1.8rem, 3.5vw, 4rem)",
+                    fontSize: "clamp(1.4rem, 2.5vw, 2.8rem)",
                     lineHeight: "1.1",
                     letterSpacing: "-0.03em",
                   }}
@@ -326,7 +330,7 @@ export function UnifiedLayout() {
                   style={{
                     fontFamily: "var(--font-instrument-sans)",
                     fontWeight: 400,
-                    fontSize: "clamp(0.9rem, 1.2vw, 1.5rem)",
+                    fontSize: "clamp(0.8rem, 1vw, 1.1rem)",
                     lineHeight: "1.4",
                     letterSpacing: "-0.01em",
                   }}
@@ -354,7 +358,7 @@ export function UnifiedLayout() {
               className={`w-full ${
                 isMobile
                   ? "order-1 mb-6"
-                  : `lg:w-1/2 ${isEven ? "lg:pl-8" : "lg:pr-8"} ${isEven ? "lg:order-2" : "lg:order-1"} order-1 mb-6 sm:mb-8 lg:mb-0`
+                  : `lg:w-3/5 ${isEven ? "lg:pl-8" : "lg:pr-8"} ${isEven ? "lg:order-2" : "lg:order-1"} order-1 mb-6 sm:mb-8 lg:mb-0`
               }`}
             >
               <motion.div
